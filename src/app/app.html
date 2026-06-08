@@ -1,0 +1,38 @@
+<main class="page-shell">
+  <section class="toolbar">
+    <div>
+      <h1>REST API Items</h1>
+      <p>List, add, and delete objects from restful-api.dev.</p>
+    </div>
+
+    <button type="button" class="refresh-button" (click)="loadItems()" [disabled]="isLoading">
+      {{ isLoading ? 'Loading...' : 'Refresh' }}
+    </button>
+  </section>
+
+  @if (errorMessage) {
+    <p class="status error">{{ errorMessage }}</p>
+  }
+
+  <section class="content-layout">
+    <aside class="add-panel">
+      <h2>Add item</h2>
+      <app-add-item (itemCreated)="addItem($event)" />
+    </aside>
+
+    <section class="list-panel">
+      <h2>Items</h2>
+
+      @if (isLoading) {
+        <p class="status">Loading items...</p>
+      } @else {
+        <app-item-list
+          [items]="items"
+          [deletingId]="deletingId"
+          (itemDeleted)="deleteItem($event)"
+        />
+      }
+
+    </section>
+  </section>
+</main>

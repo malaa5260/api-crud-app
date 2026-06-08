@@ -1,0 +1,30 @@
+<div class="items">
+  @for (item of items; track item.id) {
+    <article class="item-card">
+      <div class="item-header">
+        <div>
+          <h3>{{ item.name }}</h3>
+          <p>ID: {{ item.id }}</p>
+        </div>
+
+        <button type="button" (click)="itemDeleted.emit(item.id)" [disabled]="deletingId === item.id">
+          {{ deletingId === item.id ? 'Deleting...' : 'Delete' }}
+        </button>
+      </div>
+
+      <dl>
+        <div>
+          <dt>Color</dt>
+          <dd>{{ item.data?.color }}</dd>
+        </div>
+
+        <div>
+          <dt>Capacity</dt>
+          <dd>{{ item.data?.capacity}}</dd>
+        </div>
+      </dl>
+    </article>
+  } @empty {
+    <p class="empty-list">No items found.</p>
+  }
+</div>

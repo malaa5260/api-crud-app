@@ -1,0 +1,18 @@
+<form class="item-form" [formGroup]="itemForm" (ngSubmit)="submit()">
+  <div class="field">
+    <label for="name">Item name</label>
+    <input id="name" type="text" formControlName="name" required />
+  </div>
+
+  <div class="field">
+    <label for="color">Color</label>
+    <input id="color" type="text" formControlName="color" />
+  </div>
+
+  <div class="field">
+    <label for="capacity">Capacity</label>
+    <input id="capacity" type="text" placeholder="128 GB" formControlName="capacity" />
+  </div>
+
+  <button type="submit" [disabled]="!itemForm.controls.name.value.trim()">Add item</button>
+</form>
