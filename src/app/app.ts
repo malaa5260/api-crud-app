@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { finalize, timeout } from 'rxjs';
 
 import { AddItem } from './components/add-item/add-item';
@@ -15,63 +15,62 @@ import { ObjectsApi } from './services/objects-api';
 export class App implements OnInit {
   private readonly objectsApi = inject(ObjectsApi);
 
-  items: ApiObject[] = [];
-  isLoading = false;
-  errorMessage = '';
-  deletingId: string | null = null;
+  items = signal<ApiObject[]>([]);
+  isLoading = signal(false);
+  errorMessage = signal('');
+  deletingId = signal<string | null>(null);
 
   ngOnInit(): void {
     this.loadItems();
   }
 
   loadItems(): void {
-    debugger;
-    this.isLoading = true;
-    this.errorMessage = '';
+    this.isLoading.set(true);
+    this.errorMessage.set('');
 
     this.objectsApi
       .getItems()
       .pipe(
         timeout(10000),
         finalize(() => {
-          this.isLoading = false;
+          this.isLoading.set(false);
         }),
       )
       .subscribe({
         next: (items) => {
-          this.items = items;
+          this.items.set(items);
         },
         error: () => {
-          this.errorMessage = 'Could not load items from the API.';
+          this.errorMessage.set('Could not load items from the API.');
         },
       });
   }
 
   addItem(item: CreateApiObject): void {
-    this.errorMessage = '';
+    this.errorMessage.set('');
 
     this.objectsApi.addItem(item).subscribe({
       next: (createdItem) => {
-        this.items = [createdItem, ...this.items];
+        this.items.update((items) => [createdItem, ...items]);
       },
       error: () => {
-        this.errorMessage = 'Could not add the item. Please try again.';
+        this.errorMessage.set('Could not add the item. Please try again.');
       },
     });
   }
 
   deleteItem(id: string): void {
-    this.deletingId = id;
-    this.errorMessage = '';
+    this.deletingId.set(id);
+    this.errorMessage.set('');
 
     this.objectsApi.deleteItem(id).subscribe({
       next: () => {
-        this.items = this.items.filter((item) => item.id !== id);
-        this.deletingId = null;
+        this.items.update((items) => items.filter((item) => item.id !== id));
+        this.deletingId.set(null);
       },
       error: () => {
-        this.errorMessage = 'Could not delete the item. Try deleting an item you created in this session.';
-        this.deletingId = null;
+        this.errorMessage.set('Could not delete the item. Try deleting an item you created in this session.');
+        this.deletingId.set(null);
       },
     });
   }

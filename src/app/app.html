@@ -5,13 +5,13 @@
       <p>List, add, and delete objects from restful-api.dev.</p>
     </div>
 
-    <button type="button" class="refresh-button" (click)="loadItems()" [disabled]="isLoading">
-      {{ isLoading ? 'Loading...' : 'Refresh' }}
+    <button type="button" class="refresh-button" (click)="loadItems()" [disabled]="isLoading()">
+      {{ isLoading() ? 'Loading...' : 'Refresh' }}
     </button>
   </section>
 
-  @if (errorMessage) {
-    <p class="status error">{{ errorMessage }}</p>
+  @if (errorMessage()) {
+    <p class="status error">{{ errorMessage() }}</p>
   }
 
   <section class="content-layout">
@@ -23,12 +23,12 @@
     <section class="list-panel">
       <h2>Items</h2>
 
-      @if (isLoading) {
+      @if (isLoading()) {
         <p class="status">Loading items...</p>
       } @else {
         <app-item-list
-          [items]="items"
-          [deletingId]="deletingId"
+          [items]="items()"
+          [deletingId]="deletingId()"
           (itemDeleted)="deleteItem($event)"
         />
       }
