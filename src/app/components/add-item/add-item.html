@@ -1,4 +1,4 @@
-<form class="item-form" [formGroup]="itemForm" (ngSubmit)="submit()">
+<form class="item-form" [formGroup]="itemForm" (ngSubmit)="submit()" animate.enter="enter-animation">
   <div class="field">
     <label for="name">Item name</label>
     <input id="name" type="text" formControlName="name" required />

@@ -15,12 +15,12 @@
   }
 
   <section class="content-layout">
-    <aside class="add-panel">
+    <aside class="add-panel h-full">
       <h2>Add item</h2>
       <app-add-item (itemCreated)="addItem($event)" />
     </aside>
 
-    <section class="list-panel">
+    <section class="list-panel h-full">
       <h2>Items</h2>
 
       @if (isLoading()) {
@@ -34,5 +34,7 @@
       }
 
     </section>
+
+
   </section>
 </main>

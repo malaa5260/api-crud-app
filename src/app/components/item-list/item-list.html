@@ -1,6 +1,6 @@
 <div class="items">
   @for (item of items; track item.id) {
-    <article class="item-card">
+    <article class="item-card" animate.enter="enter-animation">
       <div class="item-header">
         <div>
           <h3>{{ item.name }}</h3>
