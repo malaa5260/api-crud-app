@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 
 import { ApiObject } from '../../models/api-object';
 
@@ -6,6 +6,7 @@ import { ApiObject } from '../../models/api-object';
   selector: 'app-item-list',
   imports: [],
   templateUrl: './item-list.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './item-list.css',
 })
 export class ItemList {

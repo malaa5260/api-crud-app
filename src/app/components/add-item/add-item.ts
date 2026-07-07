@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { CreateApiObject, toCreateApiObjectDto } from '../../models/api-object';
@@ -7,6 +7,7 @@ import { CreateApiObject, toCreateApiObjectDto } from '../../models/api-object';
   selector: 'app-add-item',
   imports: [ReactiveFormsModule],
   templateUrl: './add-item.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './add-item.css',
 })
 export class AddItem {
