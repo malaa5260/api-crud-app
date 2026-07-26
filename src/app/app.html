@@ -44,4 +44,8 @@
   <p>Unit Price: {{ unitPrice() }}</p>
   <p>Quantity: {{ quantity() }}</p>
   <p>Total Price: {{ totalPrice() }}</p>
+
+  <p>User: {{ user().name }} - {{ user().age }}</p>
+
+  <button type="button" (click)="changeUserData()" class="main-button">Change User Data</button>
 </main>

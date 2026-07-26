@@ -104,4 +104,19 @@ export class App implements OnInit {
   increaseQuantity() {
     this.quantity.update(value => value + 1);
   }
+
+
+  user = signal({
+    name: "John",
+    age: 30
+  }).asReadonly();
+
+
+  // Deep Mutation
+  changeUserData() {
+    this.user().name = "AYMAN";
+    this.user().age = 40;
+  }
+
+
 }
