@@ -94,4 +94,14 @@ export class App implements OnInit {
   incrementCount() {
     this.count.update(value => value + 1);
   }
+
+
+  unitPrice = signal(70);
+  quantity = signal(2);
+
+  totalPrice = computed(() => this.unitPrice() * this.quantity());
+
+  increaseQuantity() {
+    this.quantity.update(value => value + 1);
+  }
 }
