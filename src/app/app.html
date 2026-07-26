@@ -48,4 +48,10 @@
   <p>User: {{ user().name }} - {{ user().age }}</p>
 
   <button type="button" (click)="changeUserData()" class="main-button">Change User Data</button>
+
+  <p>Name: {{ userName() }}</p>
+  <button type="button" (click)="toggleUserName()" class="main-button">Toggle User Name</button>
+
+  <p>Counter: {{ counter() }}</p>
+  <button type="button" (click)="increaseCounter()" class="main-button">Increase Counter</button>
 </main>

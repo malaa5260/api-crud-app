@@ -1,4 +1,4 @@
-import { assertNotInReactiveContext, Component, computed, inject, OnInit, signal } from '@angular/core';
+import { assertNotInReactiveContext, Component, computed, effect, inject, OnInit, signal, untracked } from '@angular/core';
 import { finalize, timeout } from 'rxjs';
 
 import { AddItem } from './components/add-item/add-item';
@@ -75,6 +75,7 @@ export class App implements OnInit {
     });
   }
 
+  //assertNotInReactiveContext
 
   count = signal(0);
 
@@ -95,7 +96,7 @@ export class App implements OnInit {
     this.count.update(value => value + 1);
   }
 
-
+  //computed
   unitPrice = signal(70);
   quantity = signal(2);
 
@@ -105,7 +106,7 @@ export class App implements OnInit {
     this.quantity.update(value => value + 1);
   }
 
-
+  //asReadonly
   user = signal({
     name: "John",
     age: 30
@@ -119,4 +120,28 @@ export class App implements OnInit {
   }
 
 
+  //constructor
+  constructor() {
+
+    effect(() => {
+      console.log('Effect:', this.userName());
+      // console.log('Effect:', untracked(this.counter));
+
+      untracked(() => {
+        console.log('Effect untracked:', this.counter());
+      })
+    });
+  }
+  //untracked function  
+
+  userName = signal('Amir');
+  toggleUserName(): void {
+    // Amir => Ehap
+    this.userName.update((v) => (v === 'Amir' ? 'Ehap' : 'Amir'));
+  }
+
+  counter = signal(1);
+  increaseCounter(): void {
+    this.counter.update((v) => v + 1);
+  }
 }
