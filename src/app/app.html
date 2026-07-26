@@ -11,7 +11,7 @@
   </section>
 
   @if (errorMessage()) {
-    <p class="status error">{{ errorMessage() }}</p>
+  <p class="status error">{{ errorMessage() }}</p>
   }
 
   <section class="content-layout">
@@ -24,17 +24,18 @@
       <h2>Items</h2>
 
       @if (isLoading()) {
-        <p class="status">Loading items...</p>
+      <p class="status">Loading items...</p>
       } @else {
-        <app-item-list
-          [items]="items()"
-          [deletingId]="deletingId()"
-          (itemDeleted)="deleteItem($event)"
-        />
+      <app-item-list [items]="items()" [deletingId]="deletingId()" (itemDeleted)="deleteItem($event)" />
       }
 
     </section>
 
 
   </section>
+
+  <button type="button" (click)="incrementCount()" class="main-button">Increment Count</button>
+
+  <p>Count: {{ count() }}</p>
+  <p>Double Count: {{ doubleCount() }}</p>
 </main>

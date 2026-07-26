@@ -111,3 +111,21 @@ h2 {
     grid-template-columns: 1fr;
   }
 }
+
+button.main-button {
+  background: #0f172a;
+  border: 0;
+  border-radius: 6px;
+  color: #ffffff;
+  cursor: pointer;
+  flex: 0 0 auto;
+  font: inherit;
+  font-weight: 700;
+  min-height: 38px;
+  padding: 0 14px;
+}
+
+button.main-button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}

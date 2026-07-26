@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { assertNotInReactiveContext, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { finalize, timeout } from 'rxjs';
 
 import { AddItem } from './components/add-item/add-item';
@@ -73,5 +73,25 @@ export class App implements OnInit {
         this.deletingId.set(null);
       },
     });
+  }
+
+
+  count = signal(0);
+
+  doubleCount = computed(() => {
+    //reactive context
+
+    //this.fetchData();
+    return this.count() * 2;
+  });
+
+  fetchData() {
+    assertNotInReactiveContext(this.fetchData);
+    // SIDE EFFECT - THIS FUNCTION DOES SOMETHING
+    console.log('Fetching data...');
+  }
+
+  incrementCount() {
+    this.count.update(value => value + 1);
   }
 }
