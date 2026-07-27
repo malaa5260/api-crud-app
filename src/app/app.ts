@@ -1,4 +1,4 @@
-import { assertNotInReactiveContext, Component, computed, effect, inject, OnInit, signal, untracked } from '@angular/core';
+import { assertNotInReactiveContext, Component, computed, effect, inject, isSignal, OnInit, signal, untracked } from '@angular/core';
 import { finalize, timeout } from 'rxjs';
 
 import { AddItem } from './components/add-item/add-item';
@@ -145,22 +145,41 @@ export class App implements OnInit {
   increaseCounter(): void {
     this.counter.update((v) => v + 1);
   }
-
-  constructor() {
-    // effect => Reactive Context , async operation Break Reactive Context
-    effect(async () => {
-      const status = this.isDataVisible();
-      const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
-      const data = await response.json();
-      if (status) {
-        console.log(data);
-      }
-    });
-  }
+  //async operation Break Reactive Context
+  // constructor() {
+  //   // effect => Reactive Context , async operation Break Reactive Context
+  //   effect(async () => {
+  //     const status = this.isDataVisible();
+  //     const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
+  //     const data = await response.json();
+  //     if (status) {
+  //       console.log(data);
+  //     }
+  //   });
+  // }
 
   isDataVisible = signal(true);
 
   toggleDataVisibility() {
     this.isDataVisible.update((v) => !v);
+  }
+
+  // isSignal( arg ) => false , true 
+  name = signal<string>("Mohamed Alaa Osman");
+  age = 30;
+
+  constructor() {
+    this.print(this.name);
+    this.print(this.age);
+  }
+
+  print(data: any): void {
+    //signal scope
+    if (isSignal(data)) {
+      console.log("signal scope : ", data());
+    } else {
+      // value scope
+      console.log("value scope : ", data);
+    }
   }
 }
