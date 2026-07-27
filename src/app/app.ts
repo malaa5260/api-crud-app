@@ -1,4 +1,4 @@
-import { assertNotInReactiveContext, Component, computed, effect, inject, isSignal, isWritableSignal, OnInit, signal, untracked } from '@angular/core';
+import { assertNotInReactiveContext, Component, computed, effect, inject, isSignal, isWritableSignal, linkedSignal, OnInit, signal, untracked } from '@angular/core';
 import { finalize, timeout } from 'rxjs';
 
 import { AddItem } from './components/add-item/add-item';
@@ -194,5 +194,19 @@ export class App implements OnInit {
     else {
       alert("signal is not writable");
     }
+  }
+
+
+  //linkedSignal() => we can use set method
+
+  employess = signal(['Osama', 'Ahmed', 'Mohamed']);
+  selectedEmployee = linkedSignal(() => this.employess()[0]);
+
+  selectedManger(index: number): void {
+    this.selectedEmployee.set(this.employess()[index]);
+  }
+
+  replaceEmployees() {
+    this.employess.set(["Kareem", "Yousse", "Omar"]);
   }
 }

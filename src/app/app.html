@@ -74,4 +74,13 @@
 
   <hr class="my-4" />
   <button type="button" (click)="resetSignal(doubleCount2)" class="main-button">Reset Computed Signal</button>
+
+  <hr class="my-4" />
+  <h2>selected Manger</h2>
+  <p>Manger : {{ selectedEmployee() }}</p>
+  @for (employee of employess(); track employee) {
+  <button type="button" (click)="selectedManger($index)" class="main-button">{{ employee }}</button>
+  }
+  <hr class="my-4" />
+  <button type="button" (click)="replaceEmployees()" class="main-button">Replace Employees</button>
 </main>
