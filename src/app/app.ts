@@ -121,17 +121,18 @@ export class App implements OnInit {
 
 
   //constructor
-  constructor() {
+  // constructor() {
 
-    effect(() => {
-      console.log('Effect:', this.userName());
-      // console.log('Effect:', untracked(this.counter));
+  //   effect(() => {
+  //     console.log('Effect:', this.userName());
+  //     // console.log('Effect:', untracked(this.counter));
 
-      untracked(() => {
-        console.log('Effect untracked:', this.counter());
-      })
-    });
-  }
+  //     untracked(() => {
+  //       console.log('Effect untracked:', this.counter());
+  //     })
+  //   });
+  // }
+
   //untracked function  
 
   userName = signal('Amir');
@@ -143,5 +144,23 @@ export class App implements OnInit {
   counter = signal(1);
   increaseCounter(): void {
     this.counter.update((v) => v + 1);
+  }
+
+  constructor() {
+    // effect => Reactive Context , async operation Break Reactive Context
+    effect(async () => {
+      const status = this.isDataVisible();
+      const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
+      const data = await response.json();
+      if (status) {
+        console.log(data);
+      }
+    });
+  }
+
+  isDataVisible = signal(true);
+
+  toggleDataVisibility() {
+    this.isDataVisible.update((v) => !v);
   }
 }

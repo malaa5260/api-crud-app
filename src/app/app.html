@@ -38,20 +38,31 @@
 
   <p>Count: {{ count() }}</p>
   <p>Double Count: {{ doubleCount() }}</p>
+  <hr class="my-4" />
 
   <button type="button" (click)="increaseQuantity()" class="main-button">Increase Quantity</button>
 
   <p>Unit Price: {{ unitPrice() }}</p>
   <p>Quantity: {{ quantity() }}</p>
   <p>Total Price: {{ totalPrice() }}</p>
+  <hr class="my-4" />
 
   <p>User: {{ user().name }} - {{ user().age }}</p>
 
   <button type="button" (click)="changeUserData()" class="main-button">Change User Data</button>
+  <hr class="my-4" />
 
   <p>Name: {{ userName() }}</p>
   <button type="button" (click)="toggleUserName()" class="main-button">Toggle User Name</button>
 
   <p>Counter: {{ counter() }}</p>
   <button type="button" (click)="increaseCounter()" class="main-button">Increase Counter</button>
+  <hr class="my-4" />
+  <button type="button" (click)="toggleDataVisibility()" class="main-button">Toggle Data Visibility</button>
+
+  @if (isDataVisible()) {
+  <p>Data is visible</p>
+  } @else {
+  <p>Data is not visible</p>
+  }
 </main>
