@@ -1,4 +1,4 @@
-import { assertNotInReactiveContext, Component, computed, effect, inject, isSignal, OnInit, signal, untracked } from '@angular/core';
+import { assertNotInReactiveContext, Component, computed, effect, inject, isSignal, isWritableSignal, OnInit, signal, untracked } from '@angular/core';
 import { finalize, timeout } from 'rxjs';
 
 import { AddItem } from './components/add-item/add-item';
@@ -168,10 +168,10 @@ export class App implements OnInit {
   name = signal<string>("Mohamed Alaa Osman");
   age = 30;
 
-  constructor() {
-    this.print(this.name);
-    this.print(this.age);
-  }
+  // constructor() {
+  //   this.print(this.name);
+  //   this.print(this.age);
+  // }
 
   print(data: any): void {
     //signal scope
@@ -180,6 +180,19 @@ export class App implements OnInit {
     } else {
       // value scope
       console.log("value scope : ", data);
+    }
+  }
+
+  //isWritableSignal( signal ) => true, false  
+  count2 = signal(10);
+  doubleCount2 = computed(() => this.count2() * 2);
+
+  resetSignal(signal: any): void {
+    if (isWritableSignal(signal)) {
+      signal.set(0);
+    }
+    else {
+      alert("signal is not writable");
     }
   }
 }

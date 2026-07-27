@@ -65,4 +65,13 @@
   } @else {
   <p>Data is not visible</p>
   }
+
+  <hr class="my-4" />
+
+  <p>Count2: {{ count2() }}</p>
+  <p>Double Count2: {{ doubleCount2() }}</p>
+  <button type="button" (click)="resetSignal(count2)" class="main-button">Reset Signal</button>
+
+  <hr class="my-4" />
+  <button type="button" (click)="resetSignal(doubleCount2)" class="main-button">Reset Computed Signal</button>
 </main>
