@@ -274,4 +274,26 @@ export class App implements OnInit {
       { id: 3, name: "Orange" },
     ]);
   }
+
+  //  Custom equality comparison in linkedSignal()
+  constructor() {
+    effect(() => {
+      console.log("currentMnager", this.currentMnager());
+    })
+  }
+  manger = signal({ id: 1, name: "Mohamed" });
+  // currentMnager = linkedSignal(() => this.manger(), {
+  //   equal: (a, b) => a.id === b.id
+  // });
+
+  currentMnager = linkedSignal({
+    source: this.manger,
+    computation: (currrentSource) => currrentSource,
+    equal: (a, b) => a.id === b.id
+  });
+
+  changeManger() {
+    this.manger.set({ id: 1, name: "Mohamed" });
+  }
+
 }
