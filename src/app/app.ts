@@ -5,10 +5,14 @@ import { AddItem } from './components/add-item/add-item';
 import { ItemList } from './components/item-list/item-list';
 import { ApiObject, CreateApiObject } from './models/api-object';
 import { ObjectsApi } from './services/objects-api';
-
+import { FormsModule } from '@angular/forms';
+interface IProduct {
+  id: number;
+  name: string;
+}
 @Component({
   selector: 'app-root',
-  imports: [AddItem, ItemList],
+  imports: [AddItem, ItemList, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -240,4 +244,34 @@ export class App implements OnInit {
     console.log("New Data is", this.data());
   }
 
+  products = signal<IProduct[]>([
+    { id: 1, name: "Apple" },
+    { id: 2, name: "Banana" },
+    { id: 3, name: "Orange" },
+  ]);
+
+  selectedProduct = linkedSignal<IProduct[], IProduct>({
+    source: this.products,
+    computation: (currrentSource, prev) => {
+      const prevId = prev?.value.id;
+      const prevProduct = this.products().find(p => p.id === prevId);
+
+      return prevProduct ?? currrentSource[0];
+    }
+  });
+
+  onChange(id: number) {
+    const product = this.products().find(p => p.id === id);
+    if (product) {
+      this.selectedProduct.set(product);
+    }
+  }
+
+  refershData() {
+    this.products.set([
+      { id: 1, name: "Mango" },
+      { id: 22, name: "PineApple" },
+      { id: 3, name: "Orange" },
+    ]);
+  }
 }

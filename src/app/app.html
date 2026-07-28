@@ -88,4 +88,14 @@
   <p>Data: {{ data() }}</p>
   <p>Selected Value: {{ selectedValue() }}</p>
   <button type="button" (click)="toggleData()" class="main-button">Toggle Data</button>
+  <hr class="my-4" />
+
+  <p>Selected Product: {{ selectedProduct().name }}</p>
+  <select name="" id="" [ngModel]="selectedProduct().id" (ngModelChange)="onChange($event)">
+    @for (product of products(); track product.id) {
+    <option [ngValue]="product.id">{{product.name}}</option>
+    }
+  </select>
+  <hr class="my-4" />
+  <button type="button" (click)="refershData()" class="main-button">Refresh Data</button>
 </main>
