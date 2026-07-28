@@ -209,4 +209,35 @@ export class App implements OnInit {
   replaceEmployees() {
     this.employess.set(["Kareem", "Yousse", "Omar"]);
   }
+
+  //linkedSignal() based on source + computation
+  flag = signal(true);
+  data = signal([1, 2, 3]);
+
+  selectedValue = linkedSignal({
+    source: this.data,
+    computation: (currrentSource, prev) => {
+      //prev => previous source value {source,value}
+      //currrentSource => current source value
+
+      console.log("currentSource ", currrentSource);
+      console.log("prev Value :", prev?.value);
+      console.log("prev Source :", prev?.source);
+
+      return currrentSource[0];
+    }
+  });
+
+
+  toggleData() {
+    if (this.flag()) {
+      this.data.set([4, 5, 6]);
+    } else {
+      this.data.set([1, 2, 3]);
+    }
+
+    this.flag.update((v) => !v);
+    console.log("New Data is", this.data());
+  }
+
 }
