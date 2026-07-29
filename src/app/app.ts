@@ -296,12 +296,16 @@ export class App implements OnInit {
     this.manger.set({ id: 1, name: "Mohamed" });
   }
   //Resource
-
+  //Resource() previous property
   userId = signal(1);
+  isResolvedStatus = signal(false);
 
   userData = resource({
     params: () => ({ id: this.userId() }),
-    loader: ({ params: { id } }) => this.getUserData(id)
+    loader: (obj) => {
+      this.isResolvedStatus.set(obj.previous?.status === 'resolved');
+      return this.getUserData(obj.params.id)
+    }
   });
 
 
@@ -312,4 +316,6 @@ export class App implements OnInit {
   increaseUserId() {
     this.userId.update(v => v + 1);
   }
+
+
 }

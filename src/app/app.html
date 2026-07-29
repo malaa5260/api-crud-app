@@ -109,8 +109,11 @@
   <p>User Data: {{userData.value().name}}</p>
   }
 
-  @if(userData.isLoading()){
-  <p>Loading...</p>
+  @if(userData.isLoading() && !isResolvedStatus()){
+  <p class="text-3xl text-red-500">Initial Loading Spinner ...</p>
+  }
+  @if(userData.isLoading() && isResolvedStatus()){
+  <p class="text-3xl text-green-500">Refresh Data Loading Spinner ...</p>
   }
 
   <button type="button" (click)="increaseUserId()" class="main-button">Increase User Id</button>
