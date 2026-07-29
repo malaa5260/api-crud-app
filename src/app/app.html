@@ -1,5 +1,5 @@
 <main class="page-shell">
-  <section class="toolbar">
+  <!-- <section class="toolbar">
     <div>
       <h1>REST API Items</h1>
       <p>List, add, and delete objects from restful-api.dev.</p>
@@ -102,6 +102,17 @@
   <hr class="my-4" />
   <p>Manger: {{manger().name}}</p>
   <p>Manger: {{currentMnager().name}}</p>
-  <button type="button" (click)="changeManger()" class="main-button">Change Manger</button>
+  <button type="button" (click)="changeManger()" class="main-button">Change Manger</button> -->
+
+  <hr class="my-4" />
+  @if(userData.hasValue()){
+  <p>User Data: {{userData.value().name}}</p>
+  }
+
+  @if(userData.isLoading()){
+  <p>Loading...</p>
+  }
+
+  <button type="button" (click)="increaseUserId()" class="main-button">Increase User Id</button>
 
 </main>

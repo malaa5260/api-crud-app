@@ -1,4 +1,4 @@
-import { assertNotInReactiveContext, Component, computed, effect, inject, isSignal, isWritableSignal, linkedSignal, OnInit, signal, untracked } from '@angular/core';
+import { assertNotInReactiveContext, Component, computed, effect, inject, isSignal, isWritableSignal, linkedSignal, OnInit, resource, signal, untracked } from '@angular/core';
 import { finalize, timeout } from 'rxjs';
 
 import { AddItem } from './components/add-item/add-item';
@@ -295,5 +295,21 @@ export class App implements OnInit {
   changeManger() {
     this.manger.set({ id: 1, name: "Mohamed" });
   }
+  //Resource
 
+  userId = signal(1);
+
+  userData = resource({
+    params: () => ({ id: this.userId() }),
+    loader: ({ params: { id } }) => this.getUserData(id)
+  });
+
+
+  getUserData(id: number): Promise<any> {
+    return fetch(`https://jsonplaceholder.typicode.com/users/${id}`).then(res => res.json())
+  }
+
+  increaseUserId() {
+    this.userId.update(v => v + 1);
+  }
 }
