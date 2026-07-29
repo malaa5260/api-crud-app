@@ -298,6 +298,7 @@ export class App implements OnInit {
   //Resource
   //Resource() previous property
   //Resource() AbortSignal 
+  // Resource() => reload() method
 
   userId = signal(1);
   isResolvedStatus = signal(false);
@@ -320,6 +321,5 @@ export class App implements OnInit {
   increaseUserId() {
     this.userId.update(v => v + 1);
   }
-
 
 }
