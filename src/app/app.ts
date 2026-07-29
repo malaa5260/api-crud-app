@@ -297,20 +297,24 @@ export class App implements OnInit {
   }
   //Resource
   //Resource() previous property
+  //Resource() AbortSignal 
+
   userId = signal(1);
   isResolvedStatus = signal(false);
 
   userData = resource({
     params: () => ({ id: this.userId() }),
     loader: (obj) => {
+      // obj is params that sendedto loader
+      console.log(obj)
       this.isResolvedStatus.set(obj.previous?.status === 'resolved');
-      return this.getUserData(obj.params.id)
+      return this.getUserData(obj.params.id, obj.abortSignal)
     }
   });
 
 
-  getUserData(id: number): Promise<any> {
-    return fetch(`https://jsonplaceholder.typicode.com/users/${id}`).then(res => res.json())
+  getUserData(id: number, abortSignal?: AbortSignal): Promise<any> {
+    return fetch(`https://jsonplaceholder.typicode.com/users/${id}`, { signal: abortSignal }).then(res => res.json())
   }
 
   increaseUserId() {
