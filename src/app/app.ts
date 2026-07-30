@@ -1,4 +1,4 @@
-import { assertNotInReactiveContext, Component, computed, effect, inject, isSignal, isWritableSignal, linkedSignal, OnInit, resource, signal, untracked } from '@angular/core';
+import { assertNotInReactiveContext, Component, computed, debounced, effect, inject, isSignal, isWritableSignal, linkedSignal, OnInit, resource, signal, untracked } from '@angular/core';
 import { finalize, timeout } from 'rxjs';
 
 import { AddItem } from './components/add-item/add-item';
@@ -321,5 +321,11 @@ export class App implements OnInit {
   increaseUserId() {
     this.userId.update(v => v + 1);
   }
+
+
+  // debounced() signals => status is resolved if source not changed or loading when source changed
+  // debounced() is signal that returns a signal
+  search = signal('');
+  debouncedSearch = debounced(this.search, 1000);
 
 }
