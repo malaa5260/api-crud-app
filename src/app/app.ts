@@ -137,7 +137,7 @@ export class App implements OnInit {
   //   });
   // }
 
-  //untracked function  
+  //untracked function
 
   userName = signal('Amir');
   toggleUserName(): void {
@@ -168,7 +168,7 @@ export class App implements OnInit {
     this.isDataVisible.update((v) => !v);
   }
 
-  // isSignal( arg ) => false , true 
+  // isSignal( arg ) => false , true
   name = signal<string>("Mohamed Alaa Osman");
   age = 30;
 
@@ -187,7 +187,7 @@ export class App implements OnInit {
     }
   }
 
-  //isWritableSignal( signal ) => true, false  
+  //isWritableSignal( signal ) => true, false
   count2 = signal(10);
   doubleCount2 = computed(() => this.count2() * 2);
 
@@ -297,7 +297,7 @@ export class App implements OnInit {
   }
   //Resource
   //Resource() previous property
-  //Resource() AbortSignal 
+  //Resource() AbortSignal
   // Resource() => reload() method
 
   userId = signal(1);
@@ -323,9 +323,19 @@ export class App implements OnInit {
   }
 
 
-  // debounced() signals => status is resolved if source not changed or loading when source changed
-  // debounced() is signal that returns a signal
+  // debounced() => debounced signal is a signal that returns a signal and it is used to debounce a signal value over time. It takes two arguments: the source signal and the debounce time in milliseconds. The debounced signal will only update its value after the specified debounce time has passed since the last change to the source signal.
+  // Debounced signals: resolved when the source is stable, loading when it changes.
+
   search = signal('');
-  debouncedSearch = debounced(this.search, 1000);
+  // debouncedSearch = debounced(this.search, 1000);
+
+  // debounced() signals - Custom wait function
+
+  debouncedSearch = debounced(this.search, (value) => {
+    const delay = value.length < 3 ? 3000 : 1000;
+    // return promise to set delay value
+    return new Promise(resolve => setTimeout(resolve, delay));
+  });
+
 
 }
